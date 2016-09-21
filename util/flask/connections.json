@@ -4,7 +4,7 @@
       "name": "stinger-dev",
       "stingerURL": "localhost",
       "stingerPort": 8088,
-      "flaskPort": 82
+      "flaskPort": 5100
     }
   ]
 }
