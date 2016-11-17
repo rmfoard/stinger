@@ -72,6 +72,7 @@ main(int argc, char *argv[])
     }
 
     int64_t * partitions = (int64_t *)alg->alg_data;
+    double_t * parmod_placeholder = NULL;
 
 
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -79,7 +80,7 @@ main(int argc, char *argv[])
     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     stinger_alg_begin_init(alg); {
         if (stinger_max_active_vertex(alg->stinger) > 0)
-            community_detection(alg->stinger, stinger_max_active_vertex(alg->stinger) + 1, partitions, max_iter);
+            community_detection(alg->stinger, stinger_max_active_vertex(alg->stinger) + 1, partitions, parmod_placeholder, max_iter);
     } stinger_alg_end_init(alg);
 
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -96,7 +97,7 @@ main(int argc, char *argv[])
         if(stinger_alg_begin_post(alg)) {
             int64_t nv = (stinger_mapping_nv(alg->stinger))?stinger_mapping_nv(alg->stinger)+1:0;
             if (nv > 0) {
-                community_detection(alg->stinger, nv, partitions, max_iter);
+                community_detection(alg->stinger, nv, partitions, parmod_placeholder, max_iter);
             }
 
             stinger_alg_end_post(alg);

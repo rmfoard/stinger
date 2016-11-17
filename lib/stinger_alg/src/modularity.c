@@ -34,7 +34,7 @@ modularity(stinger_t * S, int64_t vertex_a, int64_t vertex_b, double_t m){
 }
 
 int64_t *
-louvain_method(stinger_t * S, int64_t * partitions, int64_t size, int64_t m, int64_t maxIter){
+louvain_method(stinger_t * S, int64_t * partitions, double_t * parmod, int64_t size, int64_t m, int64_t maxIter) {
     int64_t num_moves;
     int64_t num_iter = 0;
     do {
@@ -55,10 +55,11 @@ louvain_method(stinger_t * S, int64_t * partitions, int64_t size, int64_t m, int
             if (partitions[i] != label) {
                 //we move the vertex
                 partitions[i] = label;
+                parmod[i] = (double) label;  /* temporary, for plumbing check */
                 num_moves += 1;
             }
         }
-    }while (num_moves > 0 && num_iter < maxIter);
+    } while (num_moves > 0 && num_iter < maxIter);
     return partitions;
 }
 
@@ -70,18 +71,25 @@ louvain_method(stinger_t * S, int64_t * partitions, int64_t size, int64_t m, int
  * partitions, and a the maximum number of iterations the algorithm will run for
  */
 void
-community_detection(stinger_t * S, int64_t NV, int64_t * partitions, int64_t maxIter){
+community_detection(stinger_t * S, int64_t NV, int64_t * partitions, double_t * parmod, int64_t maxIter) {
     //we need the sum of the total weights in the graph to calculate modularity
     double_t m = 0;
     STINGER_FORALL_EDGES_OF_ALL_TYPES_BEGIN(S){
                             m += STINGER_EDGE_WEIGHT;
                         }STINGER_FORALL_EDGES_OF_ALL_TYPES_END();
 
-    //begin by setting each vertex to its own partiton
+    // Begin by setting each vertex to its own partiton, parmod to 0.0
     for (int64_t i = 0; i < NV; i++){
         partitions[i] = i;
+        parmod[i] = (double) i;  /* temporary, for plumbing check */
     }
     int64_t num_partitions = NV;
-    partitions = louvain_method(S,partitions, NV, m, maxIter);
 
+    // Assign each vertex to a community
+    partitions = louvain_method(S, partitions, parmod, NV, m, maxIter);
+
+    // Measure the "tightness" of each community as the sum of internal edge
+    // weights divided by the sum of external edge weights.
+    //for (int64_t i = 0; i < NV; i++){
+    //}
 }
