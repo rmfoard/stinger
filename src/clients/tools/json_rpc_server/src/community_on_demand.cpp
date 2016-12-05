@@ -37,13 +37,15 @@ JSON_RPC_community_on_demand::operator()(rapidjson::Value * params, rapidjson::V
   rapidjson::Value vtx_id (rapidjson::kArrayType);
   rapidjson::Value vtx_str (rapidjson::kArrayType);
   rapidjson::Value vtx_val (rapidjson::kArrayType);
-  rapidjson::Value vtx_parmods (rapidjson::kArrayType);
+  rapidjson::Value vtx_intsums (rapidjson::kArrayType);
+  rapidjson::Value vtx_extsums (rapidjson::kArrayType);
 
   int64_t * vertices = NULL;
   int64_t * partitions = NULL;
-  double_t * parmods = NULL;
+  int64_t * intsums = NULL;
+  int64_t * extsums = NULL;
 
-  int64_t num_vertices = community_on_demand(S, &vertices, &partitions, &parmods);
+  int64_t num_vertices = community_on_demand(S, &vertices, &partitions, &intsums, &extsums);
 
   for (int64_t i = 0; i < num_vertices; i++) {
     name.SetInt64(vertices[i]);
@@ -60,14 +62,16 @@ JSON_RPC_community_on_demand::operator()(rapidjson::Value * params, rapidjson::V
     }
     value.SetInt64(partitions[i]);
     vtx_val.PushBack(value, allocator);
-    vtx_parmods.PushBack(parmods[i], allocator);
+    vtx_intsums.PushBack(intsums[i], allocator);
+    vtx_extsums.PushBack(extsums[i], allocator);
   }
 
   result.AddMember("vertex_id", vtx_id, allocator);
   if (strings)
     result.AddMember("vertex_str", vtx_str, allocator);
   result.AddMember("value", vtx_val, allocator);
-  result.AddMember("vertex_parmod", vtx_parmods, allocator);
+  result.AddMember("vertex_intsum", vtx_intsums, allocator);
+  result.AddMember("vertex_extsum", vtx_extsums, allocator);
 
   if (vertices != NULL) {
     xfree(vertices);
@@ -77,8 +81,12 @@ JSON_RPC_community_on_demand::operator()(rapidjson::Value * params, rapidjson::V
     xfree(partitions);
   }
 
-  if (parmods != NULL) {
-    xfree(parmods);
+  if (intsums != NULL) {
+    xfree(intsums);
+  }
+
+  if (extsums != NULL) {
+    xfree(extsums);
   }
 
   return 0;

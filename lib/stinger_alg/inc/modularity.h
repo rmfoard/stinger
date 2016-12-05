@@ -10,6 +10,6 @@
 #include "stinger_core/xmalloc.h"
 #include "stinger_core/stinger_error.h"
 
-void community_detection(stinger_t * S, int64_t NV, int64_t * partitions, double_t * parmod, int64_t maxIter);
+void community_detection(stinger_t * S, int64_t NV, int64_t * partitions, int64_t * intsums, int64_t * extsums, int64_t maxIter);
 
 #endif //DYNOGRAPH_MODULARITY_H
