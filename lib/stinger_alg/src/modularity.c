@@ -130,8 +130,8 @@ community_detection(stinger_t * S, int64_t NV, int64_t * partitions, int64_t * i
             sum_wts(S, NV, partitions, &isum, &esum, i);
             for (int64_t j = 0; j < NV; j += 1) {
                 if (partitions[j] == i) {
-                    intsums[j] += isum;
-                    extsums[j] += esum;
+                    intsums[j] = isum;
+                    extsums[j] = esum;
                 }
             }
         }
