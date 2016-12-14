@@ -77,15 +77,30 @@ int main (int argc, char *argv[])
 
   int64_t nv = S->max_nv;
   int64_t ne = 0;
+  char * srcPhysID;
+  char * dstPhysID;
+  uint64_t srcIDLen;
+  uint64_t dstIDLen;
 
   for (int64_t i = 0; i < nv; i++) {
     STINGER_FORALL_OUT_EDGES_OF_VTX_BEGIN(S, i) {
-      fprintf(fp, "%ld %ld %ld %ld %ld %ld\n",  STINGER_EDGE_SOURCE, 
+      if(-1 == stinger_mapping_physid_direct(S, STINGER_EDGE_SOURCE, &srcPhysID, &srcIDLen)) {
+        srcPhysID = (char *) "";
+        srcIDLen = 0;
+      }
+      if(-1 == stinger_mapping_physid_direct(S, STINGER_EDGE_DEST, &dstPhysID, &dstIDLen)) {
+        dstPhysID = (char *) "";
+        dstIDLen = 0;
+      }
+
+      fprintf(fp, "%ld %ld %ld %ld %ld %ld %s %s\n",  STINGER_EDGE_SOURCE, 
 					    STINGER_EDGE_DEST,
 					    STINGER_EDGE_TYPE,
 					    STINGER_EDGE_WEIGHT,
 					    STINGER_EDGE_TIME_FIRST,
-					    STINGER_EDGE_TIME_RECENT);
+					    STINGER_EDGE_TIME_RECENT,
+                                            srcPhysID,
+                                            dstPhysID);
       ne++;
     } STINGER_FORALL_OUT_EDGES_OF_VTX_END();
   }
