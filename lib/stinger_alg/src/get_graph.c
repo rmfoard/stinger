@@ -51,5 +51,5 @@ int64_t get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst,
     *edge_type = output_edge_type;
     *edge_wt = output_edge_wt;
 
-    return (intn64_t) 0;
+    return (int64_t) 0;
 }
