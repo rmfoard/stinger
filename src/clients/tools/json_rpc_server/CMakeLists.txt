@@ -15,6 +15,7 @@ set(sources
 	src/bfs_edges.cpp
 	src/breadth_first_search.cpp
         src/community_on_demand.cpp
+        src/get_graph.cpp
 	src/egonet.cpp
 	src/get_algorithms.cpp
 	src/get_connected_component.cpp
