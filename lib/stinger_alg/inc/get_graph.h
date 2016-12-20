@@ -10,7 +10,7 @@
 extern "C" {
 #endif
 
-void get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst, int64_t ** edge_type, int64_t ** edge_wt, int64_t *nv, int64_t *ne);
+int64_t get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst, int64_t ** edge_type, int64_t ** edge_wt, int64_t *nv, int64_t *ne);
 
 #ifdef __cplusplus
 }

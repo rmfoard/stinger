@@ -7,7 +7,7 @@
  *  Return Stinger's graph.
  *
  */
-void get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst, int64_t ** edge_type, int64_t ** edge_wt, int64_t *nv, int64_t *ne) {
+int64_t get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst, int64_t ** edge_type, int64_t ** edge_wt, int64_t *nv, int64_t *ne) {
     if (*edge_src != NULL || *edge_dst != NULL || *edge_type != NULL || *edge_wt != NULL) {
         LOG_E("get_graph output arrays should not be allocated before call.  Possible memory leak.");
     }
@@ -50,4 +50,6 @@ void get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst, in
     *edge_dst = output_edge_dst;
     *edge_type = output_edge_type;
     *edge_wt = output_edge_wt;
+
+    return (intn64_t) 0;
 }
