@@ -24,8 +24,8 @@ void get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst, in
     *edge_wt = output_edge_wt;
 
     /* Allocate output arrays */
-    int64_t *ne = stinger_max_total_edges(S);
-    int64_t *nv = stinger_max_active_vertex(S) + 1;
+    *ne = stinger_max_total_edges(S);
+    *nv = stinger_max_active_vertex(S) + 1;
     output_edge_src = (int64_t *) xmalloc (*ne * sizeof(int64_t));
     output_edge_dst = (int64_t *) xmalloc (*ne * sizeof(int64_t));
     output_edge_type = (int64_t *) xmalloc(*ne * sizeof(int64_t));
@@ -49,5 +49,5 @@ void get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst, in
     *edge_src = output_edge_src;
     *edge_dst = output_edge_dst;
     *edge_type = output_edge_type;
-    *extsums = output_extsums;
+    *edge_wt = output_edge_wt;
 }
