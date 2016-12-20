@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -84,6 +85,8 @@ int main (int argc, char *argv[])
 
   for (int64_t i = 0; i < nv; i++) {
     STINGER_FORALL_OUT_EDGES_OF_VTX_BEGIN(S, i) {
+      assert(i == STINGER_EDGE_SOURCE);
+
       if(-1 == stinger_mapping_physid_direct(S, STINGER_EDGE_SOURCE, &srcPhysID, &srcIDLen)) {
         srcPhysID = (char *) "";
         srcIDLen = 0;
