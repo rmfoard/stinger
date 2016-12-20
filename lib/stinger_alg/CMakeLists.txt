@@ -3,6 +3,7 @@ set(sources
   src/betweenness.c
   src/clustering.c
   src/community_on_demand.c
+  src/get_graph.c
   src/kcore.c
   src/pagerank.c
   src/random.c
@@ -21,6 +22,7 @@ set(headers
   inc/betweenness.h
   inc/clustering.h
   inc/community_on_demand.h
+  inc/get_graph.h
   inc/kcore.h
   inc/pagerank.h
   inc/random.h

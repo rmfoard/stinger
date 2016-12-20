@@ -42,3 +42,6 @@ target_link_libraries(stinger_hits stinger_net stinger_alg)
 
 add_executable(stinger_community_detection community_detection/src/community_detection.c)
 target_link_libraries(stinger_community_detection stinger_net stinger_alg)
+
+add_executable(stinger_get_graph get_graph/src/get_graph.c)
+target_link_libraries(stinger_get_graph stinger_net stinger_alg)
