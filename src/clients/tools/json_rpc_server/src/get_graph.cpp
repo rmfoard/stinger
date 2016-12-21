@@ -78,8 +78,8 @@ JSON_RPC_get_graph::operator()(rapidjson::Value * params, rapidjson::Value & res
     result.AddMember("edge_dst", e_dst, allocator);
     result.AddMember("edge_type", e_type, allocator);
     result.AddMember("edge_wt", e_wt, allocator);
-    result.AddMember("vertices", rj_nv);
-    result.AddMember("edges", rj_ne);
+    result.AddMember("vertices", rj_nv, allocator);
+    result.AddMember("edges", rj_ne, allocator);
 
     if (edge_src != NULL) {
         xfree(edge_src);
