@@ -24,12 +24,12 @@ int64_t get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst,
     *edge_wt = output_edge_wt;
 
     /* Allocate output arrays */
-    *ne = stinger_max_total_edges(S);
     *nv = stinger_max_active_vertex(S) + 1;
-    output_edge_src = (int64_t *) xmalloc (*ne * sizeof(int64_t));
-    output_edge_dst = (int64_t *) xmalloc (*ne * sizeof(int64_t));
-    output_edge_type = (int64_t *) xmalloc(*ne * sizeof(int64_t));
-    output_edge_wt = (int64_t *) xmalloc(*ne * sizeof(int64_t));
+    int64_t ne_ubound = stinger_max_total_edges(S);
+    output_edge_src = (int64_t *) xmalloc (ne_ubound * sizeof(int64_t));
+    output_edge_dst = (int64_t *) xmalloc (ne_ubound * sizeof(int64_t));
+    output_edge_type = (int64_t *) xmalloc(ne_ubound * sizeof(int64_t));
+    output_edge_wt = (int64_t *) xmalloc(ne_ubound * sizeof(int64_t));
 
     /* Scan every vertex's out-star */
     int64_t v;
@@ -41,9 +41,9 @@ int64_t get_graph(const stinger_t * S, int64_t ** edge_src, int64_t ** edge_dst,
             output_edge_type[e] = STINGER_EDGE_TYPE;
             output_edge_wt[e] = STINGER_EDGE_WEIGHT;
             e += 1;
-            assert(e <= *ne);
         } STINGER_FORALL_OUT_EDGES_OF_VTX_END();
     }
+    *ne = e;
 
     /* Set output arrays */
     *edge_src = output_edge_src;
