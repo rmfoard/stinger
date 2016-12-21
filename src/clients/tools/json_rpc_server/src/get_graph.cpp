@@ -32,12 +32,14 @@ JSON_RPC_get_graph::operator()(rapidjson::Value * params, rapidjson::Value & res
         return json_rpc_error(-32603, result, allocator);
     }
 
-    rapidjson::Value vtx_phys;
     rapidjson::Value e_src(rapidjson::kArrayType);
     rapidjson::Value e_dst(rapidjson::kArrayType);
     rapidjson::Value e_type(rapidjson::kArrayType);
     rapidjson::Value e_wt(rapidjson::kArrayType);
     rapidjson::Value vtx_str(rapidjson::kArrayType);
+    rapidjson::Value vtx_phys;
+    rapidjson::Value rj_nv;
+    rapidjson::Value rj_ne;
 
     int64_t * edge_src = NULL;
     int64_t * edge_dst = NULL;
@@ -47,6 +49,9 @@ JSON_RPC_get_graph::operator()(rapidjson::Value * params, rapidjson::Value & res
     int64_t ne;
 
     get_graph(S, &edge_src, &edge_dst, &edge_type, &edge_wt, &nv, &ne);
+
+    rj_nv.SetInt64(nv);
+    rj_ne.SetInt64(ne);
 
     if (strings) for (int64_t i = 0; i < nv; i += 1) {
         char * physID;
@@ -73,6 +78,8 @@ JSON_RPC_get_graph::operator()(rapidjson::Value * params, rapidjson::Value & res
     result.AddMember("edge_dst", e_dst, allocator);
     result.AddMember("edge_type", e_type, allocator);
     result.AddMember("edge_wt", e_wt, allocator);
+    result.AddMember("vertices", rj_nv);
+    result.AddMember("edges", rj_ne);
 
     if (edge_src != NULL) {
         xfree(edge_src);
